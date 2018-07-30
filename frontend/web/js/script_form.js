@@ -1,7 +1,6 @@
 $(document).ready(function() { // вся мaгия пoсле зaгрузки стрaницы
-		$(document).on('click', '.send', function(e){
+		$(document).on('click', '.service__form-submit', function(e){
 		e.preventDefault();
-
 		//для отправки файла
 		// var file_data = $('#file-2').prop('files')[0];
 
@@ -129,7 +128,7 @@ var $grid = $('.grid').masonry({
 $('.grid').imagesLoaded( function() {
 	$('.grid-preloader').css('display', 'none');
 	$('.grid, .more_btn').css('display', 'block');
-	
+
 	$('.grid').masonry({
 		itemSelector: '.grid-item',
 		percentPosition: true

@@ -20,8 +20,8 @@ use mihaildev\elfinder\ElFinder;
 
 <!--    --><?//= $form->field($model, 'file')->textInput(['maxlength' => true]) ?>
 	<?= $form->field($model, 'file')->widget(CKEditor::className(), [
-		'editorOptions' => ElFinder::ckeditorOptions('elfinder',[/* Some CKEditor Options */]),
-	]);?>
+		'editorOptions' => ElFinder::ckeditorOptions('elfinder',['enterMode' => 2, 'forceEnterMode'=>false, 'shiftEnterMode'=>1  ]),
+	])->label('Текст или картинка с ссылкой для категории');?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('contacts', 'Save'), ['class' => 'btn btn-success']) ?>

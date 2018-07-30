@@ -26,11 +26,7 @@ class SendForm extends Model{
 			$city      = $_POST['city'] ?? '';
 			$specialty = $_POST['specialty'] ?? '';
 			$subject   = $_POST['subject'] ?? '';
-			$service   = "";
-			$service   .= $_POST['service_mob'] . ',' ?? '';
-			$service   .= $_POST['service_supp'] . ',' ?? '';
-			$service   .= $_POST['service_site'] . ',' ?? '';
-			$service   .= $_POST['service_seo'] ?? '';
+			$service   = $_POST['service'] ?? '';
 			$text      = $_POST['text'];
 			$my_file   = "";
 			/*if (!empty($_FILES['file']['tmp_name'])) {
@@ -71,7 +67,6 @@ class SendForm extends Model{
 					}
 				}
 			}
-			
 			$message = 'Имя: ' . $name . '<br>';
 			if ( $phone ) {
 				$message .= 'Телефон: ' . $phone . '<br>';
@@ -106,7 +101,7 @@ class SendForm extends Model{
 			
 			$message .= "Content-Transfer-Encoding: base64\n\n" .
 			            $filepart . "\n\n";
-
+			
 //			if ( mail( $adminEmail,($subject) ? $subject : 'Заявка на обратный звонок',$message,'content-type: text/html' ) )
 			Yii::$app->mailer->useFileTransport = false;
 			if ( Yii::$app->mailer->compose()

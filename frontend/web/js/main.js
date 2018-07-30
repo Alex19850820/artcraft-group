@@ -59,10 +59,10 @@ $(document).ready(function() { // вся мaгия пoсле зaгрузки с�
 		$('.fileUp').each(function () {
 			file.push( $(this).val());
 		});
-		var service_mob = $("input[name='ckeckbox_mob']:checked");
-		var service_supp = $("input[name='ckeckbox_supp']:checked");
-		var service_site = $("input[name='ckeckbox_site']:checked");
-		var service_seo = $("input[name='ckeckbox_seo']:checked");
+		// var service_mob = $("input[name='ckeckbox_mob']:checked");
+		// var service_supp = $("input[name='ckeckbox_supp']:checked");
+		// var service_site = $("input[name='ckeckbox_site']:checked");
+		// var service_seo = $("input[name='ckeckbox_seo']:checked");
 		var skype = $("input[name='skype']").val();
 		var email = $("input[name='email']").val();
 		var text = $("#message").val();
@@ -70,6 +70,11 @@ $(document).ready(function() { // вся мaгия пoсле зaгрузки с�
 		var valid_email = pattern.test(email);
 		//var re = /^\d[\d\(\)\ -]{4,14}\d$/;
 		//var valid_phone = re.test(phone);
+		var service = [];
+		$('input[name=radio]:checked').each(function () {
+			service.push($(this).val());
+		});
+		service = service.join(',');
 
 		if (name == '') {
 			alert('Введите Ваше имя!');
@@ -100,23 +105,23 @@ $(document).ready(function() { // вся мaгия пoсле зaгрузки с�
 			form_data.append('name', name);
 			form_data.append('phone', phone);
 			form_data.append('email', email);
-			form_data.append('skype', phone);
+			form_data.append('skype', skype);
 			form_data.append('text', text);
 			form_data.append('file', file);
 
-			if(service_mob.length != 0){
-				form_data.append('service_mob', service_mob.val());
-			}
-			if(service_supp.length != 0) {
-				form_data.append('service_supp', service_supp.val());
-			}
-			if(service_site.length != 0) {
-				form_data.append('service_site', service_site.val());
-			}
-			if(service_seo.length != 0) {
-				form_data.append('service_seo', service_seo.val());
-			}
-			// form_data.append('file', file_data);
+			// if(service_mob.length != 0){
+			// 	form_data.append('service_mob', service_mob.val());
+			// }
+			// if(service_supp.length != 0) {
+			// 	form_data.append('service_supp', service_supp.val());
+			// }
+			// if(service_site.length != 0) {
+			// 	form_data.append('service_site', service_site.val());
+			// }
+			// if(service_seo.length != 0) {
+			// 	form_data.append('service_seo', service_seo.val());
+			// }
+			form_data.append('service', service);
 
 
 			$.ajax({

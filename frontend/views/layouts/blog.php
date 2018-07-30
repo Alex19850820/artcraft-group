@@ -19,6 +19,9 @@ use frontend\assets\AppAsset;
 use yii\helpers\Url;
 
 $contacts = \backend\modules\contacts\models\Contacts::find()->asArray()->all();
+$phone = \backend\modules\contacts\models\Contacts::find()->where(['name' => 'phone'])->one();
+$email = \backend\modules\contacts\models\Contacts::find()->where(['name' => 'email'])->one();
+$logo = \backend\modules\contacts\models\Contacts::find()->where(['name' => 'logo'])->one();
 
 AppAsset::register($this);
 ?>
@@ -126,9 +129,8 @@ AppAsset::register($this);
 	<meta name="msapplication-TileColor" content="#da532c">
 	<meta name="msapplication-TileImage" content="/mstile-144x144.png">
 	<?php $this->head() ?>
-<!--	--><?//=	GATracking::widget([
-//		'trackingId' => 'UA-67894795-1',
-//	]) ?>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+
 </head>
 <body>
 	<?php $this->beginBody() ?>
@@ -148,21 +150,28 @@ AppAsset::register($this);
 <!-- end html_open-index.html-->
 
 <!-- start header-index.html-->
-<header class="header header-index">
-	<div class="header__wrapper js_header">
+<header class="header header-index js_headerIndex">
+	<div class="header__wrapper js_header header-wrapper-down">
+		<div class="header__logo logo header__index-appear">
+			<a href="/">
+				<?=$logo->file;?>
+			</a>
+		</div>
 		<div class="container">
 			<div class="header__mobile-btn"><span></span></div>
 			
-			<ul class="header__nav js_nav">
-				<li class="header__nav-li logo"><a href="/"><img src="<?=Url::to('@web/img/logo_header_red.svg');?>" width="160" height="35" alt=""></a></li>
-				
+			<ul class="header__nav">
+				<li class="header__logo header__logo_mobile logo"><a href="/">
+						<?=$logo->file;?>
+					</a>
+				</li>
 				<ul class="header__nav-container">
 					<li class="header__nav-li"><a href="<?=Url::to('/service');?>">Услуги</a></li>
 					<li class="header__nav-li"><a class="scroll" href="#portfolio">Портфолио</a></li>
-					<li class="header__nav-li"><a href="#">Распродажи</a></li>
+					<li class="header__nav-li"><a href="#">Горячие предложения</a></li>
 					<li class="header__nav-li"><a class="scroll" href="#blog">Блог</a></li>
 					<li class="header__nav-li"><a href="#">Развеивание мифов</a></li>
-					<li class="header__nav-li dropdown">
+					<li class="header__nav-li active-page dropdown">
 						<a class="scroll" href="<?=Url::to('/about');?>">О нас</a>
 						<button class="dropdown_mob">></button>
 						<ul class="header__submenu header__submenu_mob">
@@ -173,12 +182,25 @@ AppAsset::register($this);
 					</li>
 					<li class="header__nav-li"><a class="scroll" href="#brief">Контакты</a></li>
 				</ul>
+				<li class="header__callback header__callback_mobile">
+					<img class="header__callback_img" src="<?=Url::to('@web/img/phone-ico.png');?>" alt="">
+					<div class="header__callback_text">
+						<span class="header__callback_top"><?=$phone->description ?? ''?></span>
+						<button class="header__callback_bottom">Заказать обратный звонок</button>
+					</div>
+				</li>
 			</ul>
 		</div>
-		
+		<div class="header__callback header__index-appear">
+			<img class="header__callback_img" src="<?=Url::to('@web/img/phone-ico2.png');?>" width="50px" height="50px" alt="">
+			<div class="header__callback_text">
+				<span class="header__callback_top"><?=$phone->description ?? ''?></span>
+				<button class="header__callback_bottom">Заказать обратный звонок</button>
+			</div>
+		</div>
 		<!-- <button class="header__open-btn" type="button">Узнать больше</button> -->
 	</div>
-	<div class="header__overlay"></div>
+	<div class="header__overlay js-nav-menu-up"></div>
 	
 	<img src="<?=Url::to('@web/img/balloon.png');?>" alt="" class="balloon">
 	<div class="clouds cloud1"></div>
@@ -187,135 +209,41 @@ AppAsset::register($this);
 
 <!-- end header-index.html-->
 <?= $content?>
-	<footer class="footer">
-		
-
-		<!-- start brief.html-->
-		<section class="brief" id="brief">
 	
+	<section class="footer-section">
+	
+		<div class="footer-copyri">
 			<div class="container">
-				<div class="brief__head">
-					<p class="paragraph">наш бриф</p>
-					<div class="wrap">
-						<div class="tittle">
-							<span class="block_span_title">заполните</span>
-							<h2 class="block_title">наш бриф</h2>
-							<p>
-								Хорошо заполненный бриф - первый и очень важный этап успешно и вовремя завершённого проекта.
-							</p>
+				<div class="footer-copyright">
+					<div class="footer-copyright-left">
+						<p>2015-2018 &copy; Craft Group</p>
+						<p>Все права защищены</p>
+					</div>
+					<div class="footer-copyright-right">
+						<div class="footer-phone">
+							<p><?=$phone->description ?? '';?></p>
+							<p><?=$email->description ?? ''?></p>
 						</div>
 					</div>
-				</div>
-				<div class="brief__content">
-					<form id="send_form" class="brief__form" enctype="multipart/form-data">
-						<input type="hidden" name="filePath" id="filePath">
-						<div class="brief__form-head">
-							<div>
-								<label for="name">Ваше имя, фамилия *</label>
-								<input id="name" name="name" type="text" placeholder="Ваше имя" required >
-							</div>
-	
-							<div>
-								<label for="phone">Ваш номер телефона *</label>
-								<input id="phone" type="tel" name="phone" placeholder="Номер телефона" required>
-							</div>
-	
-							<div>
-								<label for="mail">Ваш e-mail *</label>
-								<input id="mail" type="email" name="email" placeholder="Ваш Email" required>
-							</div>
-	
-							<div>
-								<label for="skype">Ваш skype</label>
-								<input id="skype" type="text" name="skype" placeholder="Номер телефона">
-							</div>
-						</div>
-	
-						<div class="brief__form-message" lang="ru">
-							<label for="message">Сообщение</label>
-							<textarea id="message" name="message" placeholder="Ваше сообщение"></textarea>
-	
-							<!-- <input type="file" name="file-2[]" id="file-2" class="inputfile inputfile-2" data-multiple-caption="{count} файла(ов) выбрано" multiple />
-							<label for="file-2"><img src="img/clip.png" width="13" height="13" alt=""> <span>Прикрепить файл&hellip;</span></label> -->
-							<div id="fine-uploader" class="uploader"></div>
-						</div>
-	
-						<div class="brief__form-services">
-							<h3>Какие услуги Вас интересуют?</h3>
-	
-							<input id="ckeckbox_mob" type="checkbox" name="ckeckbox_mob" value="Дизайн сайта или дизайн landing-page">
-							<label for="ckeckbox_mob"><span></span>Дизайн сайта или дизайн landing-page</label>
-	
-							<input id="ckeckbox_supp" type="checkbox" name="ckeckbox_supp">
-							<label for="ckeckbox_supp"><span></span> Дизайн печатной продукции (все виды)</label>
-	
-							<input id="ckeckbox_site" type="checkbox" name="ckeckbox_site">
-							<label for="ckeckbox_site"><span></span>Посадка сайта на WordPress</label>
-	
-							<input id="ckeckbox_seo" type="checkbox" name="ckeckbox_seo">
-							<label for="ckeckbox_seo"><span></span>Разработка интернет-магазина на платформе YI2</label>
-						</div>
-						<div class="brief__form-desc">
-							<p><span>*</span> обязательные поля</p>
-							<input id="submit" type="submit" class="send" value="Отправить бриф">
-						</div>
-					</form>
-					<div class="brief__contacts">
-						<h3>Наши контакты</h3>
-						<?php foreach ($contacts as $key => $value):?>
-							<?php if($value['name'] == 'phone'):?>
-								<div class="brief__tel">
-									<strong><?=$value['description']?></strong>
-								</div>
-							<?php endif;?>
-						<?php endforeach;?>
-						<div class="brief__social">
-							<strong>Соц. сети</strong>
-							<?php foreach ($contacts as $key => $value){?>
-								<?php if($value['name'] == 'social'){?>
-									<a href="<?=$value['description']?>"><?=$value['file']?></a>
-								<?php }?>
+					<div class="footer-socmenu">
+						<?php foreach ($contacts as $key => $value){?>
+							<?php if($value['name'] == 'social'){?>
+								<a href="<?=$value['description']?>"><?=$value['file']?></a>
 							<?php }?>
-						</div>
-						<div class="brief__messengers">
-							<strong>Мессенджеры</strong>
-							<?php foreach ($contacts as $key => $value):?>
-								<?php if($value['name'] == 'mess' ):?>
-									<a href="<?=$value['description']?>"><?=$value['file']?></a>
-								<?php endif;?>
-							<?php endforeach;?>
-						</div>
-						<div class="brief__email">
-							<strong>E-mail</strong>
-							<?php foreach ($contacts as $key => $value):?>
-								<?php if($value['name'] == 'email'):?>
-									<a href="mailto:<?=$value['description']?>"><?=$value['description']?></a>
-								<?php endif;?>
-							<?php endforeach;?>
-						</div>
+						<?php }?>
+						<!--							<a href="#" class="fab fa-vk"></a>-->
+						<!--							<a href="#" class="fab fa-facebook-f"></a>-->
+						<!--							<a href="#" class="fab fa-instagram"></a>-->
 					</div>
 				</div>
-	
-	
 			</div>
-	
-			<div class="animate-circle"></div>
-	
-			<img src="img/balloon.png" alt="" class="balloon">
-	
-			<p class="fill-brief"><span>покорить вершины легко!</span>Осталось только заполнить бриф</p>
-	
-		</section>
-	
-		<!-- end brief.html-->
-		</main>
-	
-		<!-- end content-main.html-->
-	
-		<!-- start html_close-index.html-->
-	</footer>
-	
-	
+		</div>
+		
+	</section>
+	<!-- end blog.html-->
+	</main>
+	<!-- end content-main.html-->
+	<!-- start html_close-index.html-->
 	
 <a href="#" class="scrollup"></a>
 	<?php $this->endBody() ?>
