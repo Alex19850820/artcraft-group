@@ -40,6 +40,7 @@ class BlogController extends Controller
             'query' => BlogSlider::find(),
         ]);
         $blog = BlogSlider::find()->where(['!=', 'options', 0])->andWhere(['!=','h1', 'current'])->orderBy(['date'=> SORT_DESC])->asArray()->all();
+	    $b_cur = BlogSlider::find()->where(['h1' => 'current'])->one();
 	    $title = KeyValue::getValue('blog_page_meta_title');
 	    $key = KeyValue::getValue('blog_page_meta_key');
 	    $desc = KeyValue::getValue('blog_page_meta_desc');
@@ -59,7 +60,7 @@ class BlogController extends Controller
 	    Yii::$app->opengraph->type = KeyValue::getValue('blog_og_type');
 	    
         return $this->render('index', [
-            'dataProvider' => $dataProvider, 'blog'=> $blog, 'title' => $title
+            'dataProvider' => $dataProvider, 'blog'=> $blog, 'title' => $title, 'b_cur' => $b_cur,
         ]);
     }
     

@@ -54,7 +54,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'value:ntext',
             'dt_add',
 
-//            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
 </div>

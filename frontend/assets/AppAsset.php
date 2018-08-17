@@ -23,15 +23,18 @@ class AppAsset extends AssetBundle
 	    'https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js',
 	    'js/slick.min.js',
 	    'js/jquery.dotdotdot.js',
-	    'js/fine-uploader.min.js',
+//	    'js/fine-uploader.min.js',
 	    'js/jquery.inputmask.bundle.js',
-	    'js/script.min.js',
 	    'js/phone.js',
 	    'js/phone-ru.js',
-	    'js/main.js',
+	    'js/script.min.js',
 	    'js/imagesloaded.pkgd.min.js',
 	    'js/masonry.pkgd.min.js',
-	    
+	    'js/main.js',
+	    'js/jquery.sticky-sidebar.js',
+	    'js/sticky-script.js',
+	    'js/slick-feedback.js',
+	    'js/allservices.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

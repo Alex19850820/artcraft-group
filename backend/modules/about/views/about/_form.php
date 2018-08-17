@@ -29,6 +29,8 @@ use mihaildev\elfinder\ElFinder;
 	<?=$form->field( $model,'file' )->widget( CKEditor::className(),[
 		'editorOptions' => ElFinder::ckeditorOptions( 'elfinder',['enterMode' => 2, 'forceEnterMode'=>false, 'shiftEnterMode'=>1] ),
 	] );?>
+	
+	<?php // $form->field($model, 'file')->textArea(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'href')->textarea(['rows' => 6]) ?>
 	

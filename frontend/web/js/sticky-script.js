@@ -1,6 +1,8 @@
-var stickySidebar = new StickySidebar('#sidebar', {
+if(window.innerWidth > 769) {
+  var stickySidebar = new StickySidebar('#sidebar', {
     topSpacing: 20,
     bottomSpacing: 20,
     containerSelector: '.main',
     innerWrapperSelector: '.sidebar__inner'
-});
+  });
+}

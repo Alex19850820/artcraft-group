@@ -9,6 +9,18 @@ if (empty($params['yandexMetrika.id'])) {
 	return [];
 }
 return [
+	'on beforeRequest' => function () {
+		$pathInfo = Yii::$app->request->pathInfo;
+		$query = Yii::$app->request->queryString;
+		if (!empty($pathInfo) && substr($pathInfo, -1) === '/') {
+			$url = '/' . substr($pathInfo, 0, -1);
+			if ($query) {
+				$url .= '?' . $query;
+			}
+			Yii::$app->response->redirect($url, 301);
+			Yii::$app->end();
+		}
+	},
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log', 'thumbnail'],
@@ -35,6 +47,10 @@ return [
 		],
 		'vacancy' => [
 			'class' => 'frontend\modules\vacancy\Vacancy',
+			'layout' => 'service',
+		],
+		'myths' => [
+			'class' => 'frontend\modules\myths\myths',
 			'layout' => 'service',
 		],
 	],
@@ -83,21 +99,23 @@ return [
 	            '/service/<slug>' => '/service/service/single-service/',
 	            'service' => '/service/service',
 	            'blog/<slug>' => '/blog',
-	            'feedback' => '/feedback/feedback',
-	            'about' => '/about/about',
-	            'vacancy' => '/vacancy/vacancy',
+	            'feedback' => '/feedback/feedback/',
+	            'about' => '/about/about/',
+	            'vacancy' => '/vacancy/vacancy/',
 	            '/vacancy/<slug>' => '/vacancy/vacancy/single-vacancy/',
+	            'myths' => '/myths/myths',
+	            '/myths/<slug>' => '/myths/myths/single-myths',
             ],
         ],
         'view' => [
-	        'as YandexMetrika' => [
-		        'class' => \hiqdev\yii2\YandexMetrika\Behavior::class,
-		        'builder' => [
-			        'class' => \hiqdev\yii2\YandexMetrika\CodeBuilder::class,
-			        'id' => $params['yandexMetrika.id'],
-			        'params' => $params['yandexMetrika.params'],
-		        ],
-	        ],
+//	        'as YandexMetrika' => [
+//		        'class' => \hiqdev\yii2\YandexMetrika\Behavior::class,
+//		        'builder' => [
+//			        'class' => \hiqdev\yii2\YandexMetrika\CodeBuilder::class,
+//			        'id' => $params['yandexMetrika.id'],
+//			        'params' => $params['yandexMetrika.params'],
+//		        ],
+//	        ],
         ],
 	    /*Thumbnail image*/
         'thumbnail' => [

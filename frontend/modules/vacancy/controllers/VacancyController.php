@@ -9,6 +9,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use common\models\BlogSlider;
 /**
  * VacancyController implements the CRUD actions for Vacancy model.
  */
@@ -35,6 +36,8 @@ class VacancyController extends Controller
      */
     public function actionIndex()
     {
+	    $blog = BlogSlider::find()->where(['!=', 'h1', 'current'])->orderBy(['date'=> SORT_DESC])->asArray()->all();
+	    $b_cur = BlogSlider::find()->where(['h1' => 'current'])->one();
         $dataProvider = new ActiveDataProvider([
             'query' => Vacancy::find(),
         ]);
@@ -58,7 +61,7 @@ class VacancyController extends Controller
 	    Yii::$app->opengraph->siteName = KeyValue::getValue('vacancy_og_site_name');
 	    Yii::$app->opengraph->type = KeyValue::getValue('vacancy_og_type');
         return $this->render('index', [
-            'dataProvider' => $dataProvider, 'vacancy' => $vacancy, 'all' => $all_vacancy, 'title' => $title,
+            'dataProvider' => $dataProvider, 'vacancy' => $vacancy, 'all' => $all_vacancy, 'title' => $title, 'b_cur'=>$b_cur, 'blog'=>$blog,
         ]);
     }
 	

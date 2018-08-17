@@ -12,10 +12,10 @@ return [
     'adminEmail' => 'admin@example.com',
     'yandexMetrika.id'      => 47718664,
     'yandexMetrika.params'  => [
-	    'webvisor'              => null,
+	    'webvisor'              => true,
 	    'trackHash'             => null,
-	    'clickmap'              => null,
-	    'trackLinks'            => null,
-	    'accurateTrackBounce'   => null,
+	    'clickmap'              => true,
+	    'trackLinks'            => true,
+	    'accurateTrackBounce'   => true,
     ],
 ];

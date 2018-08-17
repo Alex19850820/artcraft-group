@@ -51,6 +51,8 @@
 	                 'url' => ['/about/about']],
 	                ['label' => Yii::t('vacancy', 'Vacancy'), 'icon' => 'fas fa-binoculars',
 	                 'url' => ['/vacancy/vacancy']],
+	                ['label' => Yii::t('myths', 'Myths'), 'icon' => 'far fa-comments',
+	                 'url' => ['/myths/myths']],
 	                [
 		                'label' => 'SEO',
 		                'icon' => 'fas fa-wrench',
@@ -66,6 +68,8 @@
 			                
 		                ]
 	                ],
+	                ['label' => Yii::t('menu', 'Menu'), 'icon' => 'fas fa-info',
+	                 'url' => ['/menu/menu']],
                     ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii']],
                     ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug']],
                     ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],

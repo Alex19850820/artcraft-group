@@ -11,6 +11,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use common\models\BlogSlider;
 
 /**
  * AboutController implements the CRUD actions for About model.
@@ -38,6 +39,8 @@ class AboutController extends Controller
      */
     public function actionIndex()
     {
+	    $blog = BlogSlider::find()->where(['!=', 'h1', 'current'])->orderBy(['date'=> SORT_DESC])->asArray()->all();
+	    $b_cur = BlogSlider::find()->where(['h1' => 'current'])->one();
         $dataProvider = new ActiveDataProvider([
             'query' => About::find(),
         ]);
@@ -63,7 +66,7 @@ class AboutController extends Controller
 	    Yii::$app->opengraph->type = KeyValue::getValue('about_og_type');
 	    
         return $this->render('index', [
-            'dataProvider' => $dataProvider, 'about' => $about, 'feedback' => $feedback, 'title' => $title, 'service' => $service,
+            'dataProvider' => $dataProvider, 'about' => $about, 'feedback' => $feedback, 'title' => $title, 'service' => $service, 'blog'=>$blog, 'b_cur'=>$b_cur,
         ]);
     }
 

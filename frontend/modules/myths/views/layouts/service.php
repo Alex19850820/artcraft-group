@@ -21,6 +21,8 @@ $logo = \backend\modules\contacts\models\Contacts::find()->where(['name' => 'log
 $phone = \backend\modules\contacts\models\Contacts::find()->where(['name' => 'phone'])->one();
 $email = \backend\modules\contacts\models\Contacts::find()->where(['name' => 'email'])->one();
 $about = \common\models\Menu::find()->where(['page'=>'about'])->all();
+$menu = \common\models\Menu::find()->where(['page'=> 'other'])->orderBy(['position'=> SORT_ASC])->all();
+
 AppAsset::register($this);
 
 $active = Url::to();
@@ -116,9 +118,9 @@ if(explode('/',$active)) {
 		</div>
 	</script>
 	<?php $this->head() ?>
-<!-- --><?//= GATracking::widget([
-//	 		'trackingId' => 'UA-67894795-1',
-//    	]) ?>
+ <?= GATracking::widget([
+	 		'trackingId' => 'UA-67894795-1',
+    	]) ?>
 </head>
 <body>
 	<?php $this->beginBody() ?>
@@ -156,13 +158,11 @@ if(explode('/',$active)) {
 				</li>
 				
 				<ul class="header__nav-container">
-					<li class="<?= ($active=='/service') ? 'active-page': ''?> header__nav-li"><a href="<?=Url::to('/service');?>">Услуги</a></li>
-					<li class="<?= ($active=='/portfolio') ? 'active-page': ''?> header__nav-li"><a class="scroll" href="<?=Url::to('/portfolio');?>">Портфолио</a></li>
-					<li class="header__nav-li"><a href="#">Распродажи</a></li>
-					<li class="<?= ($active=='/blog') ? 'active-page': ''?> header__nav-li"><a class="scroll" href="<?=Url::to('/blog');?>">Блог</a></li>
-					<li class="header__nav-li"><a href="#">Развеивание мифов</a></li>
-					<li class="header__nav-li dropdown">
-						<a class="scroll" href="<?=Url::to('/about');?>">О нас</a>
+					<?php foreach ($menu as $value):?>
+						<li class="<?= ($active == $value->href) ? 'active-page': ''?> header__nav-li"><a href="<?=Url::to($value->href);?>"><?=$value->title?></a></li>
+					<?php endforeach;?>
+					<li class="header__nav-li dropdown <?= ($active=='/about') ? 'active-page': ''?>">
+						<a href="<?=Url::to('/about');?>">О нас</a>
 						<button class="dropdown_mob">></button>
 						<ul class="header__submenu header__submenu_mob">
 							<?php foreach ($about as $val):?>
@@ -355,8 +355,8 @@ if(explode('/',$active)) {
 	</section>
 	<!-- end footer-copyright.html-->
 	
-<a href="#" class="scrollup"></a>
 	<?php $this->endBody() ?>
+	<a href="#" class="scrollup"></a>
 </body>
 </html>
 <!-- end html_close-index.html-->

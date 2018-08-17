@@ -9,6 +9,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use common\models\BlogSlider;
 
 /**
  * PortfolioController implements the CRUD actions for Portfolio model.
@@ -29,7 +30,11 @@ class PortfolioController extends Controller
             ],
         ];
     }
-    
+	public function beforeAction($action)
+	{
+		$this->enableCsrfValidation = false;
+		return parent::beforeAction($action);
+	}
 
     /**
      * Lists all Portfolio models.
@@ -37,7 +42,9 @@ class PortfolioController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
+	    $blog = BlogSlider::find()->where(['!=', 'h1', 'current'])->orderBy(['date'=> SORT_DESC])->asArray()->all();
+	    $b_cur = BlogSlider::find()->where(['h1' => 'current'])->one();
+    	$dataProvider = new ActiveDataProvider([
             'query' => Portfolio::find(),
         ]);
         $portfolio = Portfolio::find()
@@ -67,17 +74,19 @@ class PortfolioController extends Controller
 	    Yii::$app->opengraph->siteName = KeyValue::getValue('portfolio_og_site_name');
 	    Yii::$app->opengraph->type = KeyValue::getValue('portfolio_og_type');
         return $this->render('index', [
-            'dataProvider' => $dataProvider, 'portfolio' => $portfolio, 'title' => $title, 'count' => $count,
+            'dataProvider' => $dataProvider, 'portfolio' => $portfolio, 'title' => $title, 'count' => $count, 'blog'=>$blog, 'b_cur' => $b_cur,
         ]);
     }
     
 	public function actionSinglePortfolio($slug)
 	{
+		$blog = BlogSlider::find()->where(['!=', 'h1', 'current'])->orderBy(['date'=> SORT_DESC])->asArray()->all();
+		$b_cur = BlogSlider::find()->where(['h1' => 'current'])->one();
 		$portfolio = Portfolio::find()
 		                      ->where(['slug'=>$slug])
 		                      ->asArray()
 		                      ->one();
-		return $this->render('single-portfolio', ['portfolio'=>$portfolio]);
+		return $this->render('single-portfolio', ['portfolio'=>$portfolio, 'b_cur'=>$b_cur, 'blog'=>$blog]);
 	}
 	
 	public function actionMore() {

@@ -105,6 +105,7 @@ class SiteController extends Controller
 		$title = KeyValue::getValue('main_page_meta_title');
 		$key = KeyValue::getValue('main_page_meta_key');
 		$desc = KeyValue::getValue('main_page_meta_desc');
+		$domain_verify = KeyValue::getValue('main_page_meta_p:domain_verify');
 		$main = Main::find()->all();
 		\Yii::$app->view->registerMetaTag([
 			'name' => 'description',
@@ -113,6 +114,10 @@ class SiteController extends Controller
 		\Yii::$app->view->registerMetaTag([
 			'name' => 'keywords',
 			'content' => $key,
+		]);
+		\Yii::$app->view->registerMetaTag([
+			'name' => 'p:domain_verify',
+			'content' => $domain_verify,
 		]);
 		Yii::$app->opengraph->title = KeyValue::getValue('main_og_title');
 		Yii::$app->opengraph->description = KeyValue::getValue('main_og_description');

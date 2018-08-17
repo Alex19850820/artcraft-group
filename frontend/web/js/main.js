@@ -1,49 +1,49 @@
-var uploader = new qq.FineUploader({
-		failedUploadTextDisplay: {
-			mode: 'default',
-			responseProperty: 'error',
-		},
-		element: document.getElementById("fine-uploader"),
-		validation: {
-			allowedExtensions: ['jpeg', 'png', 'jpg'],
-			itemLimit: 5,
-			sizeLimit: 31457280
-		},
-		template: 'qq-template',
-		request: {
-			endpoint: '../../frontend/web/includes/fine-uploader/endpoint.php',
-			forceMultipart: false,
-		},
-		deleteFile: {
-			enabled: true,
-			endpoint: '../../frontend/web/includes/fine-uploader/endpoint.php'
-		},
-		retry: {
-			enableAuto: true
-		},
-		dragAndDrop: {
-			disableDefaultDropzone: true //отключаем дроп-зону
-		},
-		messages: { //русифицируем некоторые сообщения и кнопки
-			typeError: "{file}: неверный тип файла. Принимаются только файлы форматов: {extensions}.",
-			sizeError: "{file}: файл слишком большой. Максимальный размер: {sizeLimit}.",
-			tooManyItemsError: "Вы пытаетесь закачать {netItems}-й файл. Максимальное количество: {itemLimit}."
-		},
-		text: {
-			uploadButton: 'Прикрепить файлы',
-			failUpload: 'Не закачан!'
-		},
-		callbacks: {
-			onComplete: function (event, id, fileName, responseJSON) {
-				// console.log($("#filePath").val(fileName.path));
-				$('#send_form').append('<input class="fileUp" name="file[]" id="file_'+ fileName.uuid +'" type="hidden" value="' + fileName.path + '">');
-			},
-			onDeleteComplete: function(id, xhr, isError) {
-				var id = JSON.parse(xhr.response).uuid;
-				$('#file_' + id).remove();
-			}
-		}
-	});
+// var uploader = new qq.FineUploader({
+// 		failedUploadTextDisplay: {
+// 			mode: 'default',
+// 			responseProperty: 'error',
+// 		},
+// 		element: document.getElementById("fine-uploader"),
+// 		validation: {
+// 			allowedExtensions: ['jpeg', 'png', 'jpg'],
+// 			itemLimit: 5,
+// 			sizeLimit: 31457280
+// 		},
+// 		template: 'qq-template',
+// 		request: {
+// 			endpoint: '../../frontend/web/includes/fine-uploader/endpoint.php',
+// 			forceMultipart: false,
+// 		},
+// 		deleteFile: {
+// 			enabled: true,
+// 			endpoint: '../../frontend/web/includes/fine-uploader/endpoint.php'
+// 		},
+// 		retry: {
+// 			enableAuto: true
+// 		},
+// 		dragAndDrop: {
+// 			disableDefaultDropzone: true //отключаем дроп-зону
+// 		},
+// 		messages: { //русифицируем некоторые сообщения и кнопки
+// 			typeError: "{file}: неверный тип файла. Принимаются только файлы форматов: {extensions}.",
+// 			sizeError: "{file}: файл слишком большой. Максимальный размер: {sizeLimit}.",
+// 			tooManyItemsError: "Вы пытаетесь закачать {netItems}-й файл. Максимальное количество: {itemLimit}."
+// 		},
+// 		text: {
+// 			uploadButton: 'Прикрепить файлы',
+// 			failUpload: 'Не закачан!'
+// 		},
+// 		callbacks: {
+// 			onComplete: function (event, id, fileName, responseJSON) {
+// 				// console.log($("#filePath").val(fileName.path));
+// 				$('#send_form').append('<input class="fileUp" name="file[]" id="file_'+ fileName.uuid +'" type="hidden" value="' + fileName.path + '">');
+// 			},
+// 			onDeleteComplete: function(id, xhr, isError) {
+// 				var id = JSON.parse(xhr.response).uuid;
+// 				$('#file_' + id).remove();
+// 			}
+// 		}
+// 	});
 
 
 $(document).ready(function() { // вся мaгия пoсле зaгрузки стрaницы

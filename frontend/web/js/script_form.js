@@ -139,7 +139,6 @@ $(document).on('click', '.more_btn', function(e) {
 	e.preventDefault();
 	$('.in_active_item').show();
 	$('.more_btn').hide();
-
 	$grid.masonry('layout');
 });
 

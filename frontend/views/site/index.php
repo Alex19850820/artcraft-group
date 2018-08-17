@@ -17,8 +17,8 @@ use himiklab\thumbnail\EasyThumbnailImage;
 $home = (Url::home(true));
 $this->title = $title;
 $this->registerJsFile('/js/fine-uploader.min.js');
-?>
 
+?>
 <!-- start content-main.html-->
 <main>
 	<!-- start portfolio.html-->
@@ -50,23 +50,27 @@ $this->registerJsFile('/js/fine-uploader.min.js');
 							<div class="gallery__block portfolio-link">
 								<img src="<?=$value['file']?>">
 								<a class="gallery__block-link" href="<?=Url::toRoute(['/portfolio']);?>"><?=$value['title']?></a>
+								<span></span>
 							</div>
 						<?php elseif($value['h1'] != 'brief'):?>
 							<div class="gallery__block portfolio-<?=$class[$i]?> portfolio-link">
 								<a href="<?=Url::toRoute(['/portfolio/'.$value['slug']]);?>">
 									<?= EasyThumbnailImage::thumbnailImg(
 											$home.$value['file'],
-										    200,
-										    200,
+										    245,
+										    800,
 										    EasyThumbnailImage::THUMBNAIL_OUTBOUND);?>
 								</a>
+								<span></span>
 							</div>
 							<?php $i++;?>
 						<?php else:?>
 							<?php if($value['h1'] == 'brief'):?>
 								<div class="gallery__block portfolio__brief portfolio-link">
 									<h2>
-										<a class="scroll" href="#brief"><?=$value['title']?></a>
+										<a class="scroll" href="#brief">
+											<?=$value['title']?><span></span>
+										</a>
 									</h2>
 								</div>
 							<?php endif;?>
@@ -128,7 +132,7 @@ $this->registerJsFile('/js/fine-uploader.min.js');
 
 						<div class="service__form-head_item">
 							<label for="skype">Ваш skype</label>
-							<input class="service__form_input" id="skype" type="text" name="skype" placeholder="Номер телефона">
+							<input class="service__form_input" id="skype" type="text" name="skype" placeholder="Ваш Skype">
 						</div>
 					</div>
 
@@ -204,7 +208,7 @@ $this->registerJsFile('/js/fine-uploader.min.js');
 						</div>
 					</div>
 
-					<div class="brief__form-message" lang="ru">
+					<div class="service__form-message" lang="ru">
 						<div class="service__form-textarea">
 							<label for="message">Сообщение</label>
 							<textarea id="message" name="message" placeholder="Ваше сообщение"></textarea>
@@ -219,7 +223,7 @@ $this->registerJsFile('/js/fine-uploader.min.js');
 							</div>
 							<span class="service__form-files">jpg, jpeg, png. gif, zip, rar, pdf, doc, xls</span>
 						</div>
-						<div id="fine-uploader" class="uploader"></div>
+<!--						<div id="fine-uploader" class="uploader"></div>-->
 					</div>
 					<div class="service__form-desc">
 						<span class="service__form-desc_span">Нажимая кнопку «Отправить» я даю свое <span class="service__form-desc_red">согласие на обработку персональных данных</span></span>
@@ -283,4 +287,5 @@ $this->registerJsFile('/js/fine-uploader.min.js');
 		<div class="animate-circle"></div>
 
 		<img src="<?=Url::to('img/balloon.png');?>" alt="" class="balloon">
+		<p class="fill-brief">Покорить вершины легко!</p>
 	</section>

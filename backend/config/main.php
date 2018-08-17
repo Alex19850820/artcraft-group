@@ -39,6 +39,12 @@ return [
 	    'main' => [
 		    'class' => 'backend\modules\main\main',
 	    ],
+	    'menu' => [
+		    'class' => 'backend\modules\menu\menu',
+	    ],
+	    'myths' => [
+		    'class' => 'backend\modules\myths\myths',
+	    ],
     ],
     'components' => [
         'request' => [

@@ -11,6 +11,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use common\models\BlogSlider;
 
 /**
  * ServiceController implements the CRUD actions for Service model.
@@ -38,6 +39,8 @@ class ServiceController extends Controller
      */
     public function actionIndex()
     {
+	    $blog = BlogSlider::find()->where(['!=', 'h1', 'current'])->orderBy(['date'=> SORT_DESC])->asArray()->all();
+	    $b_cur = BlogSlider::find()->where(['h1' => 'current'])->one();
         $dataProvider = new ActiveDataProvider([
             'query' => Service::find(),
         ]);
@@ -61,16 +64,17 @@ class ServiceController extends Controller
 	    Yii::$app->opengraph->siteName = KeyValue::getValue('service_og_site_name');
 	    Yii::$app->opengraph->type = KeyValue::getValue('service_og_type');
         return $this->render('index', [
-            'dataProvider' => $dataProvider, 'service' => $service, 'all' => $services, 'title' => $title,
+            'dataProvider' => $dataProvider, 'service' => $service, 'all' => $services, 'title' => $title, 'blog'=>$blog, 'b_cur' => $b_cur,
         ]);
     }
 	
 	public function actionSingleService($slug)
 	{
 		$service = Service::find()->where(['slug'=>$slug])->asArray()->one();
+		$services = Service::find()->where(['options'=>2])->all();
 		$portfolio = Portfolio::find()->where(['id'=> json_decode($service['portfolio'])])->asArray()->all();
 		$feedback = Feedback::find()->andWhere(['status' => 1])->andWhere(['category' => $service['id']])->asArray()->all();
-		return $this->render('single-service', ['service'=>$service, 'portfolio' => $portfolio, 'feedback' => $feedback]);
+		return $this->render('single-service', ['service'=>$service, 'portfolio' => $portfolio, 'feedback' => $feedback, 'services' => $services]);
 	}
     
 }
